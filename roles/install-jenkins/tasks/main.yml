@@ -50,4 +50,7 @@
       - "jenkins-data:/var/jenkins_home"
       - "/home/{{ansible_user}}/ssl-certificate:/certs/client:ro"
 
+- name: "Dispaly Jenkins Initial Password"
+  command: cat /var/jenkins_home/secrets/initialAdminPassword
+
 
