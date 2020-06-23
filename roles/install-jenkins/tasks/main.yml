@@ -1,5 +1,14 @@
 ---
 # tasks file for install-jenkins
+- name: "Enable Firewall Policty for CentOS 8"
+  firewalld:
+    masquerade: "yes"
+    interface: docker0
+    state: enabled
+    immediate: yes
+    permanent: yes
+    zone: trusted
+
 - name: Create Docker Network for Jenkins
   docker_network:
     name: jenkins
@@ -21,8 +30,7 @@
     env:
       DOCKER_TLS_CERTDIR: "/certs"
     name: jenkins-docker
-    # image: docker:19.03.11-dind
-    image: docker:dind
+    image: docker:19.03.11-dind
     state: started
     privileged: yes
     networks_cli_compatible: yes
