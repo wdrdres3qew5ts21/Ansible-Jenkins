@@ -4,9 +4,14 @@
   docker_network:
     name: jenkins
 
-- name: Create Docker Volume for Jenkins
+- name: Create Docker Volume for Jenkins Data
   docker_volume:
     name: jenkins-data
+    state: present
+
+- name: Create Docker Volume for Jenkins Certificate TLS
+  docker_volume:
+    name: jenkins-docker-certs
     state: present
 
 - name: "Install Docker in Docker for Jenkins"
@@ -29,7 +34,7 @@
          - docker
     volumes:
       - "jenkins-data:/var/jenkins_home"
-      - "/home/{{ansible_user}}/ssl-certificate:/certs/client:ro"
+      - "jenkins-docker-certs:/certs/client"
 
 
 - name: "Install Jenkins with Docker"
@@ -37,6 +42,7 @@
     env:
       DOCKER_HOST: "tcp://docker:2376" 
       DOCKER_CERT_PATH: "/certs/client"
+      DOCKER_TLS_VERIFY: 1
     restart: yes
     restart_policy: always
     name: jenkins-blueocean
@@ -50,7 +56,7 @@
       - name: jenkins
     volumes:
       - "jenkins-data:/var/jenkins_home"
-      - "/home/{{ansible_user}}/ssl-certificate:/certs/client:ro"
+      - "jenkins-docker-certs:/certs/client:roo"
 
 - name: "Dispaly Jenkins Initial Password"
   command: docker exec -it jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
