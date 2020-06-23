@@ -1,5 +1,5 @@
 - hosts: all
   gather_facts: no
   roles:
-    - { role: docker-network-policy, tag: docker-network-policy }
-    - { role: install-jenkins, tag: install-jenkins }
+    - { role: "docker-network-policy", tags: "docker-network-policy" }
+    - { role: "install-jenkins", tags: "install-jenkins" }
