@@ -63,6 +63,8 @@
     name: jenkins-docker
     image: docker:19.03.11-dind
     state: started
+    restart: yes
+    restart_policy: always
     privileged: yes
     networks_cli_compatible: yes
     purge_networks: yes
