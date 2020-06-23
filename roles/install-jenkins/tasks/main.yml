@@ -33,6 +33,11 @@
     state: enabled
     immediate: yes
 
+- name: "Restart Docker Service"
+  service:
+    name: docker
+    state: reloaded
+
 - name: Create Docker Network for Jenkins
   docker_network:
     name: jenkins
