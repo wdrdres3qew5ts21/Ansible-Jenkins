@@ -1,6 +1,8 @@
 ---
 # tasks file for install-jenkins
 - name: "Start firewall service"
+  become: yes
+  become_method: sudo
   service:
     name: firewalld.service
     state: started
@@ -11,15 +13,15 @@
   become_method: sudo
   firewalld:
     interface: docker0
-    state: present
+    state: enabled
     zone: trusted
 
 - name: "Add permanet firewall Policy"
   become: yes
   become_method: sudo
   firewalld:
-    zone: truted
-    state: present
+    zone: trusted
+    state: enabled
     masquerade: "yes"
     permanent: yes
 
@@ -27,8 +29,8 @@
   become: yes
   become_method: sudo
   firewalld:
-    zone: truted
-    state: present
+    zone: trusted
+    state: enabled
     immediate: yes
 
 - name: Create Docker Network for Jenkins
