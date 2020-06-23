@@ -38,7 +38,7 @@
   become_method: sudo
   service:
     name: docker
-    state: reloaded
+    state: restarted
 
 - name: Create Docker Network for Jenkins
   docker_network:
