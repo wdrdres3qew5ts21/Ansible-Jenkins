@@ -21,7 +21,8 @@
     env:
       DOCKER_TLS_CERTDIR: "/certs"
     name: jenkins-docker
-    image: docker:19.03.11-dind
+    # image: docker:19.03.11-dind
+    image: docker:dind
     state: started
     privileged: yes
     networks_cli_compatible: yes
