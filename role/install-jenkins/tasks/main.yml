@@ -10,6 +10,8 @@
     state: present
 
 - name: "Install Docker in Docker for Jenkins"
+  become: yes
+  become_method: sudo
   docker_container:
     env:
       DOCKER_TLS_CERTDIR: "/certs"
