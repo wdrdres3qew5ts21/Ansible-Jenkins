@@ -1,5 +1,32 @@
 ---
 # tasks file for install-jenkins
+- name: Create Docker Network for Jenkins
+  docker_network:
+    name: jenkins
+
+- name: Create Docker Volume for Jenkins
+  docker_volume:
+    name: jenkins-data
+    state: present
+
 - name: "Install Jenkins with Docker"
+  docker_container:
+    env:
+      DOCKER_HOST: "tcp://docker:2376" 
+      DOCKER_CERT_PATH: "/certs/client"
+    restart: yes
+    restart_policy: always
+    name: jenkins-blueocean
+    image: jenkinsci/blueocean
+    state: started
+    purge_networks: yes
+    published_ports:
+      - "8080:8080"
+    networks_cli_compatible: yes
+    networks:
+      - name: jenkins
+    volumes:
+      - "jenkins-data:/var/jenkins_home"
+      - "/home/{{ansible_user}}/ssl-certificate:/certs/client:ro"
 
 
