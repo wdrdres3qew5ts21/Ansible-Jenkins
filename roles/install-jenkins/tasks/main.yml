@@ -1,13 +1,35 @@
 ---
 # tasks file for install-jenkins
-- name: "Enable Firewall Policty for CentOS 8"
+- name: "Start firewall service"
+  service:
+    name: firewalld.service
+    state: started
+    enabled: yes
+
+- name: "ADD Firewall Policty for interface docker0"
+  become: yes
+  become_method: sudo
   firewalld:
-    masquerade: "yes"
     interface: docker0
-    state: enabled
-    immediate: yes
-    permanent: yes
+    state: present
     zone: trusted
+
+- name: "Add permanet firewall Policy"
+  become: yes
+  become_method: sudo
+  firewalld:
+    zone: truted
+    state: present
+    masquerade: "yes"
+    permanent: yes
+
+- name: "Reload firewall"
+  become: yes
+  become_method: sudo
+  firewalld:
+    zone: truted
+    state: present
+    immediate: yes
 
 - name: Create Docker Network for Jenkins
   docker_network:
