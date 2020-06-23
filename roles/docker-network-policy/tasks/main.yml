@@ -1,0 +1,41 @@
+---
+# tasks file for docker-network-policy
+- name: "Start firewall service"
+  become: yes
+  become_method: sudo
+  service:
+    name: firewalld.service
+    state: started
+    enabled: yes
+
+- name: "ADD Firewall Policty for interface docker0"
+  become: yes
+  become_method: sudo
+  firewalld:
+    interface: docker0
+    state: enabled
+    zone: trusted
+
+- name: "Add permanet firewall Policy"
+  become: yes
+  become_method: sudo
+  firewalld:
+    zone: trusted
+    state: enabled
+    masquerade: "yes"
+    permanent: yes
+
+- name: "Reload firewall"
+  become: yes
+  become_method: sudo
+  firewalld:
+    zone: trusted
+    state: enabled
+    immediate: yes
+
+- name: "Restart Docker Service"
+  become: yes
+  become_method: sudo
+  service:
+    name: docker
+    state: restarted
