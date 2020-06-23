@@ -51,12 +51,13 @@
     purge_networks: yes
     published_ports:
       - "8080:8080"
+      - "50000:50000"
     networks_cli_compatible: yes
     networks:
       - name: jenkins
     volumes:
       - "jenkins-data:/var/jenkins_home"
-      - "jenkins-docker-certs:/certs/client:roo"
+      - "jenkins-docker-certs:/certs/client:ro"
 
 - name: "Dispaly Jenkins Initial Password"
   command: docker exec -it jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
