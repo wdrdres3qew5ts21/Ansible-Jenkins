@@ -16,7 +16,7 @@
     env:
       DOCKER_TLS_CERTDIR: "/certs"
     name: jenkins-docker
-    image: 19.03.11-dind
+    image: docker:19.03.11-dind
     privileged: yes
     purge_networks: yes
     published_ports:
