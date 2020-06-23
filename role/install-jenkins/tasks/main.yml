@@ -9,6 +9,25 @@
     name: jenkins-data
     state: present
 
+- name: "Install Docker in Docker for Jenkins"
+  docker_container:
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+    name: jenkins-docker
+    image: 19.03.11-dind
+    privileged: yes
+    purge_networks: yes
+    published_ports:
+      - "2376:2376"
+    networks:
+      - name: jenkins
+        aliases:
+         - docker
+    volumes:
+      - "jenkins-data:/var/jenkins_home"
+      - "/home/{{ansible_user}}/ssl-certificate:/certs/client:ro"
+
+
 - name: "Install Jenkins with Docker"
   docker_container:
     env:
