@@ -19,6 +19,7 @@
     image: docker:19.03.11-dind
     state: started
     privileged: yes
+    networks_cli_compatible: yes
     purge_networks: yes
     published_ports:
       - "2376:2376"
